@@ -1,0 +1,9 @@
+[submodule "third_party/STM32U5xx_HAL_Driver"]
+	path = third_party/STM32U5xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32u5xx-hal-driver.git
+[submodule "third_party/CMSIS_Device_U5"]
+	path = third_party/CMSIS_Device_U5
+	url = https://github.com/STMicroelectronics/cmsis_device_u5.git
+[submodule "third_party/CMSIS_Core"]
+	path = third_party/CMSIS_Core
+	url = https://github.com/STMicroelectronics/cmsis_core.git
