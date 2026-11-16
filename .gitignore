@@ -1,0 +1,64 @@
+# Build
+build/
+Debug/
+Release/
+*.o
+*.a
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.su
+*.stldr
+*.exe
+*.out
+
+# Toolchain / deps
+*.launch
+*.mxproject
+.mxproject
+Drivers/
+Middlewares/
+CMSIS/
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# CubeIDE / Eclipse
+.settings/
+.cproject
+.project
+.metadata/
+RemoteSystemsTempFiles/
+
+# Keil / IAR
+*.uvguix.*
+*.uvoptx
+*.crun
+*.dbgdt
+*.dni
+*.wsdt
+EWARM/settings/
+EWARM/Backup*/
+Listings/
+Objects/
+
+# Python tooling (if any)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets / local config
+.env
+.env.*
+*.pem
+credentials.*
