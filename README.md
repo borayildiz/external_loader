@@ -30,7 +30,7 @@ flowchart LR
     B["Internal flash<br/>bootloader"] -->|"init + configure memory map via HSPI1, then jump"| F
 ```
 
-Details: [doc/system_concept.md](doc/system_concept.md).
+Details: [doc/system_concept.md](doc/system_concept.md), [doc/flash_driver_design.md](doc/flash_driver_design.md).
 
 ## References
 

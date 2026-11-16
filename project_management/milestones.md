@@ -8,7 +8,7 @@ Goal: concept and first implementation of an external loader (`.stldr`) for the 
 |---|---|---|
 | 1 | Analyse the inputs | Done |
 | 2 | System concept | Done |
-| 3 | Flash driver design | In progress |
+| 3 | Flash driver design | Done |
 | 4 | Loader skeleton | Open |
 | 5 | Test and verification strategy | Open |
 | 6 | Bootloader and application integration (stretch) | Open |
@@ -36,16 +36,16 @@ Describe how the pieces fit together. Result: [`doc/system_concept.md`](../doc/s
 
 ## 3. Flash driver design
 
-A small driver layer on top of the XSPI HAL, kept separate so the bootloader can reuse it.
+A small driver layer on top of the XSPI HAL, kept separate so the bootloader can reuse it. Result: [`doc/flash_driver_design.md`](../doc/flash_driver_design.md).
 
 - [x] Collect geometry from the datasheet: 16 MB, 256-byte pages, 4 KB sectors, erased value `0xFF`, 3-byte addressing
 - [x] Collect the command set from the datasheet: reset `66h`/`99h`, JEDEC ID `9Fh`, write enable `06h`, read status `05h`, page program `02h` / quad `32h`, sector erase `20h`, block erase `D8h`, chip erase `C7h`, quad read `EBh`
 - [x] Status register layout: QE bit 6, WEL bit 1, WIP bit 0
-- [ ] Confirm the JEDEC ID bytes in the datasheet (expected `9Dh 60h 18h`)
-- [ ] Confirm dummy cycles versus frequency (datasheet Table 6.11) and the mode bits for `EBh`
-- [ ] Take program, erase and power-up times from the AC characteristics for the timeouts
-- [ ] Define the driver API: init, reset, read ID, enable quad, write enable, wait while busy, erase, program, read, memory-mapped mode
-- [ ] Clear block protection before chip erase
+- [x] Confirm the JEDEC ID bytes in the datasheet: `9Dh 60h 18h` (Table 8.7)
+- [x] Confirm dummy cycles versus frequency (Table 6.11) and the mode bits for `EBh`: default 6 cycles (up to 81 MHz); first 2 cycles carry mode bits; use mode `0x00` (not `AXh`)
+- [x] Take program, erase and power-up times from the AC characteristics for the timeouts
+- [x] Define the driver API: init, reset, read ID, enable quad, clear BP, write enable, wait while busy, erase, program, read, memory-mapped mode
+- [x] Clear block protection before chip erase (BP3–BP0 must be 0 or `C7h` is ignored)
 
 ## 4. Loader skeleton
 

@@ -85,7 +85,7 @@ Details of the individual steps:
 
 - **Known flash state.** The MCU can be reset without the flash being power-cycled. The schematic shows no dedicated reset line to the flash, and the shared HOLD#/RESET# pin becomes IO3 once quad mode is enabled. The bootloader therefore starts with the software reset sequence `66h` / `99h` instead of assuming power-on state.
 - **Quad enable.** QE is bit 6 of the status register and is non-volatile. It has to be written once; afterwards the bootloader only checks it.
-- **Read command.** Memory-mapped mode uses fast read quad I/O (`EBh`): command on one line, 3-byte address and data on four lines, 6 dummy cycles of which the first 2 carry the mode bits.
+- **Read command.** Memory-mapped mode uses fast read quad I/O (`EBh`): command on one line, 3-byte address and data on four lines, 6 dummy cycles of which the first 2 carry the mode bits (mode `0x00`, not `AXh`). Details: [`doc/flash_driver_design.md`](flash_driver_design.md).
 - **Application check.** The first two words of the application are the initial stack pointer and the reset vector. The bootloader accepts the image only if the stack pointer lies in RAM and the reset vector lies inside `0xA0000000`–`0xA0FFFFFF`. An erased flash reads `0xFFFFFFFF` and fails this check.
 - **Hand-over.** The bootloader leaves HSPI1 running in memory-mapped mode. Everything else it used is switched off before the jump.
 
@@ -147,7 +147,7 @@ Constraints that follow from running this way:
 - TrustZone is disabled; everything runs in the non-secure world.
 - The crystal frequency of 24 MHz is an assumption.
 - The MCU boots from internal flash (BOOT0 low).
-- JEDEC ID bytes (expected `9Dh 60h 18h`) and the dummy-cycle table (datasheet Table 6.11) still need to be confirmed in the datasheet.
+- JEDEC ID is `9Dh 60h 18h`; `EBh` uses the default 6 dummy cycles (valid up to 81 MHz). See [`doc/flash_driver_design.md`](flash_driver_design.md).
 - The HSPI1 clock frequency for the bootloader is not chosen yet.
 
 ## References
