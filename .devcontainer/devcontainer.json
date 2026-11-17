@@ -10,13 +10,16 @@
     "vscode": {
       "extensions": [
         "llvm-vs-code-extensions.vscode-clangd",
-        "ms-vscode.makefile-tools"
+        "ms-vscode.cmake-tools"
       ],
       "settings": {
         "clangd.arguments": [
           "--query-driver=/usr/bin/arm-none-eabi-*"
         ],
-        "makefile.configureOnOpen": true
+        "cmake.configureOnOpen": true,
+        "cmake.configureArgs": [
+          "-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/cmake/arm-none-eabi.cmake"
+        ]
       }
     }
   },

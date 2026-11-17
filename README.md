@@ -47,19 +47,28 @@ git submodule update --init --recursive
 
 ## Build (Docker)
 
-ARM GCC lives in the container; the repo is bind-mounted at `/work`.
+ARM GCC and CMake live in the container; the repo is bind-mounted at `/work`.
+
+Inside the container:
 
 ```bash
-make docker-build          # build test/ → test/build/flash_test.elf
-make docker-shell          # interactive shell in the container
-make docker-clean          # remove test/build
+make                   # configure + build → test/build/flash_test.elf
+make clean
+```
+
+From the host:
+
+```bash
+make docker-build      # build image + run make build
+make docker-shell      # interactive shell in the container
+make docker-clean      # remove test/build
 ```
 
 Or with Compose directly:
 
 ```bash
 docker compose build
-docker compose run --rm build          # one-shot make -C test
+docker compose run --rm build          # one-shot make build
 docker compose run --rm shell          # bash
 ```
 
@@ -71,7 +80,7 @@ Cursor stays on the host and attaches into the container (Dev Containers). The t
 2. Open this repo in Cursor.
 3. Command Palette (`Cmd+Shift+P`) → **Dev Containers: Reopen in Container**.
 4. Wait for the image build; the status bar shows you are in the container.
-5. In the integrated terminal: `make -C test`.
+5. In the integrated terminal: `make`.
 
 Config: [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) (uses the same `Dockerfile`).
 
