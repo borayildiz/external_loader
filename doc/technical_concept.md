@@ -154,16 +154,17 @@ The loader therefore keeps interrupts off and replaces the HAL tick with a **pol
 - The `.stldr` format belongs to STM32CubeProgrammer. It works with ST-Link, and with J-Link when the probe is used through STM32CubeProgrammer.
 - SEGGER's own tools (J-Flash, Ozone) use a different loader format. Supporting them means a second, thin wrapper around the same flash driver.
 
-## 8. Assumptions and open points
+## 8. Assumptions 
 
-- TrustZone is disabled; everything runs in the non-secure world.
 - The crystal frequency of 24 MHz is an assumption.
-- The MCU boots from internal flash (BOOT0 low).
-- JEDEC ID is `9Dh 60h 18h`; `EBh` uses the default 6 dummy cycles (valid up to 81 MHz). See [`doc/flash_driver_design.md`](flash_driver_design.md).
-- The HSPI1 clock frequency for the bootloader is not chosen yet.
+
+
+## 8. Open points(TBD)
+
 - **Field update without CubeProgrammer.** The `.stldr` path is for bring-up and production programming with a debug probe. In the field, application updates must go through a product mechanism (bootloader + UART/USB/CAN/OTA) that reuses the flash driver, verifies the image, and restarts into XIP — details still undefined (transport, image layout, A/B slots, rollback).
 - **Application IP protection.** External NOR is readable offline; XIP does not hide the binary. A later security design may need encrypted storage / OTFDEC, keys inside the MCU, and signed images — coordinated with the field-update path. See also [milestones open points](../project_management/milestones.md#open-points).
 - **ICACHE / DCACHE.** Loader/`flash_test` leave caches off; residual enabled caches can still break mmap verify after program. Bootloader + XIP later needs ICACHE (remap), MPU for HSPI, and a DCACHE1 policy. Details: [milestones open points](../project_management/milestones.md#open-points).
+
 
 ## References
 
