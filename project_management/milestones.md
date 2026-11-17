@@ -12,7 +12,6 @@ Goal: concept and first implementation of an external loader (`.stldr`) for the 
 | 4 | Loader skeleton | Done |
 | 5 | Test and verification strategy | Open |
 | 6 | Bootloader and application integration (stretch) | Open |
-| 7 | Documentation | Done |
 
 ## 1. Analyse the inputs
 
@@ -75,12 +74,6 @@ Concept level only.
 - [ ] Link the application to the external flash address
 - [ ] Relocate the vector table
 - [ ] Jump sequence from the bootloader to the application
-
-## 7. Documentation
-
-- [x] Top-level `README.md` with hardware summary and system concept
-- [x] Design decisions and trade-offs — [`doc/design_decisions.md`](../doc/design_decisions.md)
-- [x] Known gaps and next steps — [`doc/known_gaps_and_next_steps.md`](../doc/known_gaps_and_next_steps.md)
 
 ## Assumptions
 - The crystal frequency of 24 MHz is an assumption.
