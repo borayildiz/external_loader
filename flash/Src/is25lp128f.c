@@ -142,7 +142,6 @@ static int32_t IS25_EnsureReady(void)
 
 int32_t IS25_Init(XSPI_HandleTypeDef *hxspi)
 {
-  uint32_t id;
   int32_t err;
 
   if (hxspi == 0) {
@@ -161,12 +160,9 @@ int32_t IS25_Init(XSPI_HandleTypeDef *hxspi)
     return err;
   }
 
-  err = IS25_ReadID(&id);
+  err = IS25_CheckJedecId(IS25_JEDEC_ID);
   if (err != IS25_OK) {
     return err;
-  }
-  if (id != IS25_JEDEC_ID) {
-    return IS25_ERR_ID;
   }
 
   err = IS25_EnableQuad();
@@ -241,6 +237,21 @@ int32_t IS25_ReadID(uint32_t *id)
   return IS25_OK;
 }
 
+int32_t IS25_CheckJedecId(uint32_t expected)
+{
+  uint32_t id;
+  int32_t err;
+
+  err = IS25_ReadID(&id);
+  if (err != IS25_OK) {
+    return err;
+  }
+  if (id != expected) {
+    return IS25_ERR_ID;
+  }
+  return IS25_OK;
+}
+
 int32_t IS25_EnableQuad(void)
 {
   uint8_t status;
@@ -288,6 +299,26 @@ int32_t IS25_ClearBlockProtect(void)
   return IS25_WriteStatus(status);
 }
 
+int32_t IS25_SetBlockProtect(uint8_t bp_bits)
+{
+  uint8_t status;
+  int32_t err;
+
+  err = IS25_EnsureReady();
+  if (err != IS25_OK) {
+    return err;
+  }
+
+  err = IS25_ReadStatus(&status);
+  if (err != IS25_OK) {
+    return err;
+  }
+
+  bp_bits = (uint8_t)(bp_bits & IS25_SR_BP_MASK);
+  status  = (uint8_t)((status & (uint8_t)~IS25_SR_BP_MASK) | bp_bits);
+  return IS25_WriteStatus(status);
+}
+
 int32_t IS25_WriteEnable(void)
 {
   XSPI_RegularCmdTypeDef cmd;
@@ -311,6 +342,12 @@ int32_t IS25_WriteEnable(void)
 
 int32_t IS25_WaitWhileBusy(uint32_t timeout_ms)
 {
+  /* Match when WIP (bit 0) is 0. */
+  return IS25_WaitStatus(0x00u, IS25_SR_WIP, timeout_ms);
+}
+
+int32_t IS25_WaitStatus(uint32_t match, uint32_t mask, uint32_t timeout_ms)
+{
   int32_t err;
 
   err = IS25_EnsureReady();
@@ -318,8 +355,7 @@ int32_t IS25_WaitWhileBusy(uint32_t timeout_ms)
     return err;
   }
 
-  /* Match when WIP (bit 0) is 0. */
-  return IS25_AutoPoll(0x00u, IS25_SR_WIP, timeout_ms);
+  return IS25_AutoPoll(match, mask, timeout_ms);
 }
 
 int32_t IS25_EraseSector(uint32_t address)

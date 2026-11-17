@@ -91,5 +91,62 @@ int FlashTests_RunAll(void)
     return -15;
   }
 
+  /* ---- Error handling (milestone 5.3) ---- */
+
+  /*
+   * Timeout: poll for WEL without WriteEnable. WEL stays clear → AutoPoll
+   * must return IS25_ERR_TIMEOUT (not hang).
+   */
+  if (IS25_WaitStatus(IS25_SR_WEL, IS25_SR_WEL, 50u) != IS25_ERR_TIMEOUT) {
+    return -16;
+  }
+
+  /* Wrong JEDEC ID: same compare Init uses, with a deliberate mismatch. */
+  if (IS25_CheckJedecId(0xFFFFFFFFu) != IS25_ERR_ID) {
+    return -17;
+  }
+  if (expect_ok(IS25_CheckJedecId(IS25_JEDEC_ID)) != 0) {
+    return -18;
+  }
+
+  /*
+   * Protected sectors: BP_ALL inhibits erase/program. Driver erase still
+   * returns OK (flash ignores the command); data must remain. Then clear BP
+   * and confirm erase works again.
+   */
+  if (expect_ok(IS25_EraseSector(TEST_ADDR)) != 0) {
+    return -19;
+  }
+  s_tx[0] = 0xA5u;
+  if (expect_ok(IS25_Program(TEST_ADDR, s_tx, 1u)) != 0) {
+    return -20;
+  }
+  if (expect_ok(IS25_SetBlockProtect(IS25_SR_BP_ALL)) != 0) {
+    return -21;
+  }
+  if (expect_ok(IS25_EraseSector(TEST_ADDR)) != 0) {
+    return -22;
+  }
+  s_rx[0] = 0;
+  if (expect_ok(IS25_Read(TEST_ADDR, s_rx, 1u)) != 0) {
+    return -23;
+  }
+  if (s_rx[0] != 0xA5u) {
+    (void)IS25_ClearBlockProtect();
+    return -24; /* protection did not hold */
+  }
+  if (expect_ok(IS25_ClearBlockProtect()) != 0) {
+    return -25;
+  }
+  if (expect_ok(IS25_EraseSector(TEST_ADDR)) != 0) {
+    return -26;
+  }
+  if (expect_ok(IS25_Read(TEST_ADDR, s_rx, 1u)) != 0) {
+    return -27;
+  }
+  if (s_rx[0] != 0xFFu) {
+    return -28;
+  }
+
   return 0;
 }

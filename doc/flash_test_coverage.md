@@ -34,6 +34,13 @@ If `IS25_Init` fails, `Error_Handler` is entered and `g_flash_test_result` stays
 | `-13` | `IS25_EnableMemoryMapped` | `EBh` mmap config (6 dummy, mode `0x00`) |
 | `-14` | CPU read at `0xA0000000` ≠ programmed pattern | Memory-mapped read vs earlier program at `0` |
 | `-15` | `IS25_DisableMemoryMapped` | Return to indirect mode |
+| `-16` | `IS25_WaitStatus(WEL)` without WREN | **Timeout** → `IS25_ERR_TIMEOUT` |
+| `-17` | `IS25_CheckJedecId(0xFFFFFFFF)` | **Wrong JEDEC ID** → `IS25_ERR_ID` |
+| `-18` | `IS25_CheckJedecId(IS25_JEDEC_ID)` | Correct ID still passes |
+| `-19`…`-20` | Erase + program marker `0xA5` at `0` | Setup for BP test |
+| `-21` | `IS25_SetBlockProtect(BP_ALL)` | Enable full-chip block protect |
+| `-22`…`-24` | Erase under BP, read still `0xA5` | **Protected sector** (erase ignored) |
+| `-25`…`-28` | `ClearBlockProtect`, erase, read `0xFF` | BP cleared; erase works again |
 
 Destructive region used: sectors `0x0000` and `0x1000` only (8 KB).
 
@@ -45,10 +52,13 @@ Destructive region used: sectors `0x0000` and `0x1000` only (8 KB).
 | `IS25_Reset` | Indirect | Inside `IS25_Init` |
 | `IS25_ReadID` | Yes | Explicit + inside init |
 | `IS25_EnableQuad` | Indirect | Inside `IS25_Init` |
-| `IS25_ClearBlockProtect` | Indirect | Inside `IS25_Init` |
+| `IS25_CheckJedecId` | Yes | Mismatch + match (error suite) |
+| `IS25_ClearBlockProtect` | Yes | Init + after BP test |
+| `IS25_SetBlockProtect` | Yes | `BP_ALL` in error suite |
 | `IS25_WriteEnable` | Indirect | Erase / program paths |
 | `IS25_WaitWhileBusy` | Indirect | After erase / program / status write |
-| `IS25_EraseSector` | Yes | Two sectors |
+| `IS25_WaitStatus` | Yes | Forced WEL timeout |
+| `IS25_EraseSector` | Yes | Two sectors + under BP |
 | `IS25_Program` | Yes | Aligned multi-page + unaligned short |
 | `IS25_Read` | Yes | After erase and after program |
 | `IS25_EnableMemoryMapped` | Yes | Explicit |
@@ -64,9 +74,9 @@ Destructive region used: sectors `0x0000` and `0x1000` only (8 KB).
 | Size not a multiple of page size | Covered (`100` bytes) |
 | Erase → `0xFF` verify | Covered |
 | Memory-mapped read-back | Covered (sector 0 pattern) |
-| Wrong JEDEC ID handling | Only via init failure path, not a dedicated negative test |
-| Timeouts | Not forced |
-| Protected sectors / BP reject | Not covered (init clears BP) |
+| Wrong JEDEC ID handling | Covered (`CheckJedecId` mismatch → `IS25_ERR_ID`) |
+| Timeouts | Covered (poll WEL without WREN → `IS25_ERR_TIMEOUT`) |
+| Protected sectors / BP reject | Covered (`BP_ALL`, erase ignored, then clear) |
 | Chip erase | Not covered |
 | Out-of-range / null args (`IS25_ERR_PARAM`) | Not covered |
 | CubeProgrammer `.stldr` path | Out of scope for this app |

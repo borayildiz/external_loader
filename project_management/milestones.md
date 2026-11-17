@@ -64,7 +64,7 @@ On-target driver suite: [`flash_test/`](../flash_test/), coverage map [`doc/flas
 
 - [x] Erase, write, read-back and verify through the on-target test app
 - [x] Edge cases: unaligned addresses, writes crossing page boundaries, sizes that are not a multiple of the page size
-- [ ] Error handling: timeouts, wrong JEDEC ID, protected sectors
+- [x] Error handling: timeouts, wrong JEDEC ID, protected sectors
 - [ ] Erase, write, read-back and verify through STM32CubeProgrammer (loader)
 - [ ] Run on hardware if a board is available
 

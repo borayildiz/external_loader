@@ -32,6 +32,8 @@ extern "C" {
 #define IS25_SR_QE        (1u << 6)
 #define IS25_SR_SRWD      (1u << 7)
 #define IS25_SR_BP_MASK   (IS25_SR_BP0 | IS25_SR_BP1 | IS25_SR_BP2 | IS25_SR_BP3)
+/* Table 6.4: BP3=1,BP0=1 → all 256 blocks protected (either TBS). */
+#define IS25_SR_BP_ALL    (IS25_SR_BP3 | IS25_SR_BP0)
 
 /* Opcodes */
 #define IS25_CMD_WREN          0x06u
@@ -75,10 +77,16 @@ int32_t IS25_Init(XSPI_HandleTypeDef *hxspi);
 
 int32_t IS25_Reset(void);
 int32_t IS25_ReadID(uint32_t *id);
+/** Read JEDEC ID and compare to @p expected; returns IS25_ERR_ID on mismatch. */
+int32_t IS25_CheckJedecId(uint32_t expected);
 int32_t IS25_EnableQuad(void);
 int32_t IS25_ClearBlockProtect(void);
+/** Set BP3–BP0 (other SR bits, including QE, preserved). @p bp_bits is an SR mask. */
+int32_t IS25_SetBlockProtect(uint8_t bp_bits);
 int32_t IS25_WriteEnable(void);
 int32_t IS25_WaitWhileBusy(uint32_t timeout_ms);
+/** Poll status until (SR & mask) == match, or @p timeout_ms elapses. */
+int32_t IS25_WaitStatus(uint32_t match, uint32_t mask, uint32_t timeout_ms);
 
 int32_t IS25_EraseSector(uint32_t address);
 int32_t IS25_EraseChip(void);

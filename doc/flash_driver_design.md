@@ -93,10 +93,13 @@ Addresses are flash-relative (`0` … `0x00FFFFFF`), not the memory-mapped base.
 int32_t IS25_Init(XSPI_HandleTypeDef *hxspi);
 int32_t IS25_Reset(void);
 int32_t IS25_ReadID(uint32_t *id);
+int32_t IS25_CheckJedecId(uint32_t expected); /* ERR_ID on mismatch; used by Init */
 int32_t IS25_EnableQuad(void);
 int32_t IS25_ClearBlockProtect(void);   /* BP3–BP0 = 0, keep QE */
+int32_t IS25_SetBlockProtect(uint8_t bp_bits); /* set BP mask, keep QE */
 int32_t IS25_WriteEnable(void);
 int32_t IS25_WaitWhileBusy(uint32_t timeout_ms);
+int32_t IS25_WaitStatus(uint32_t match, uint32_t mask, uint32_t timeout_ms);
 
 int32_t IS25_EraseSector(uint32_t address);          /* 4 KB, address aligned */
 int32_t IS25_EraseChip(void);                        /* clears BP first */
