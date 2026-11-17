@@ -101,3 +101,7 @@ Copy the `.stldr` into STM32CubeProgrammer’s `bin/ExternalLoader` directory to
 
 - https://github.com/STMicroelectronics/stm32u5xx-hal-driver
 - https://github.com/STMicroelectronics/cmsis_device_u5
+
+
+## Presentation
+- https://www.figma.com/board/K13sHL9z4dZBQ74gHTdQfD/xflash_design_doc?node-id=0-1&t=aeoUvFXtGlMAn8Xm-1
