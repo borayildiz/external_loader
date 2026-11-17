@@ -1,8 +1,8 @@
 # external_loader
 
-External loader for programming an external NOR flash on an STM32U5 board with STM32CubeProgrammer.
+External NOR flash work for an STM32U5G9ZJ board (IS25LP128F on HSPI1).
 
-Status: work in progress.
+Current focus: flash driver + on-target test app.
 
 ## Hardware
 
@@ -30,11 +30,30 @@ flowchart LR
     B["Internal flash<br/>bootloader"] -->|"init + configure memory map via HSPI1, then jump"| F
 ```
 
+## Source layout
+
+```
+flash/         IS25LP128F driver
+test/          On-target flash driver test app (HSPI bring-up + cases)
+third_party/   STM32U5 HAL + CMSIS (git submodules)
+doc/           System concept and driver design
+```
+
+After clone:
+
+```bash
+git submodule update --init --recursive
+```
+
 Details: [doc/system_concept.md](doc/system_concept.md), [doc/flash_driver_design.md](doc/flash_driver_design.md).
 
 ## References
 
 - [STM32U5G9ZJ datasheet](https://www.st.com/resource/en/datasheet/stm32u5g9zj.pdf) (STMicroelectronics, DS14102 Rev 5)
 - [IS25LP128F datasheet](https://www.issi.com/WW/pdf/25LP-WP128F.pdf) (ISSI, Rev. A10, 03/09/2026)
+
 - https://github.com/STMicroelectronics/stm32-memory-loaders/tree/contrib
 - https://github.com/STMicroelectronics/stm32u5x9j-dk-bsp
+
+- https://github.com/STMicroelectronics/stm32u5xx-hal-driver
+- https://github.com/STMicroelectronics/cmsis_device_u5
