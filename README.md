@@ -46,52 +46,6 @@ After clone:
 git submodule update --init --recursive
 ```
 
-## Build (Docker)
-
-ARM GCC and CMake live in the container; the repo is bind-mounted at `/work`.
-
-Inside the container:
-
-```bash
-make                   # configure + build → test/build/flash_test.elf
-make clean
-```
-
-From the host:
-
-```bash
-make docker-build      # build image + run make build
-make docker-shell      # interactive shell in the container
-make docker-clean      # remove test/build
-```
-
-Or with Compose directly:
-
-```bash
-docker compose build
-docker compose run --rm build          # one-shot make build
-docker compose run --rm shell          # bash
-```
-
-## IDE in the container (Cursor / VS Code)
-
-Cursor stays on the host and attaches into the container (Dev Containers). The terminal and toolchain then run inside Docker.
-
-1. Install the **Dev Containers** extension (Anysphere / Cursor).
-2. Open this repo in Cursor.
-3. Command Palette (`Cmd+Shift+P`) → **Dev Containers: Reopen in Container**.
-4. Wait for the image build; the status bar shows you are in the container.
-5. In the integrated terminal: `make`.
-
-Config: [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) (uses the same `Dockerfile`).
-
-To leave: **Dev Containers: Reopen Folder Locally**.  
-To refresh after Dockerfile changes: **Dev Containers: Rebuild Container**.
-
-Alternative without Dev Containers: keep Cursor local and only use `make docker-build` / `make docker-shell` for compiles.
-
-Details: [doc/system_concept.md](doc/system_concept.md), [doc/flash_driver_design.md](doc/flash_driver_design.md), [doc/flash_test_coverage.md](doc/flash_test_coverage.md).
-
 ## References
 
 - [STM32U5G9ZJ datasheet](https://www.st.com/resource/en/datasheet/stm32u5g9zj.pdf) (STMicroelectronics, DS14102 Rev 5)
