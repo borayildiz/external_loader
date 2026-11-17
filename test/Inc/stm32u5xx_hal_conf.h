@@ -23,6 +23,9 @@ extern "C" {
 #if !defined(HSE_VALUE)
 #define HSE_VALUE 24000000UL
 #endif
+#if !defined(HSE_STARTUP_TIMEOUT)
+#define HSE_STARTUP_TIMEOUT 100UL
+#endif
 #if !defined(HSI_VALUE)
 #define HSI_VALUE 16000000UL
 #endif
@@ -37,6 +40,9 @@ extern "C" {
 #endif
 #if !defined(LSE_VALUE)
 #define LSE_VALUE 32768UL
+#endif
+#if !defined(LSE_STARTUP_TIMEOUT)
+#define LSE_STARTUP_TIMEOUT 5000UL
 #endif
 #if !defined(EXTERNAL_SAI1_CLOCK_VALUE)
 #define EXTERNAL_SAI1_CLOCK_VALUE 48000UL

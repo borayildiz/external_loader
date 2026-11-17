@@ -45,6 +45,24 @@ After clone:
 git submodule update --init --recursive
 ```
 
+## Build (Docker)
+
+ARM GCC lives in the container; the repo is bind-mounted at `/work`.
+
+```bash
+make docker-build          # build test/ → test/build/flash_test.elf
+make docker-shell          # interactive shell in the container
+make docker-clean          # remove test/build
+```
+
+Or with Compose directly:
+
+```bash
+docker compose build
+docker compose run --rm build          # one-shot make -C test
+docker compose run --rm shell          # bash
+```
+
 Details: [doc/system_concept.md](doc/system_concept.md), [doc/flash_driver_design.md](doc/flash_driver_design.md), [doc/flash_test_coverage.md](doc/flash_test_coverage.md).
 
 ## References

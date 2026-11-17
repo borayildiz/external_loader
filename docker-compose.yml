@@ -1,0 +1,18 @@
+services:
+  build:
+    build: .
+    image: xflash-generic-build
+    volumes:
+      - .:/work
+    working_dir: /work
+    command: ["make", "-C", "test"]
+
+  shell:
+    image: xflash-generic-build
+    build: .
+    volumes:
+      - .:/work
+    working_dir: /work
+    stdin_open: true
+    tty: true
+    command: ["bash"]

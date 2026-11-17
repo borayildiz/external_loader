@@ -19,3 +19,6 @@ After a run, inspect `g_flash_test_result` in the debugger (`0` = pass).
 
 Coverage (cases, fail codes, API matrix, gaps):
 [`doc/flash_test_coverage.md`](../doc/flash_test_coverage.md).
+
+Build with Docker from the repo root (`make docker-build`) or locally
+(`make` with `arm-none-eabi-gcc` on `PATH`).

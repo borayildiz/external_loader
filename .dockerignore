@@ -1,0 +1,12 @@
+.git
+**/build
+**/*.o
+**/*.elf
+**/*.bin
+**/*.map
+**/*.lst
+**/*.su
+.idea
+.vscode
+*.code-workspace
+.DS_Store
