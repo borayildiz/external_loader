@@ -60,7 +60,7 @@ The core deliverable.
 
 ## 5. Test and verification strategy
 
-On-target driver suite: [`test/`](../test/), coverage map [`doc/flash_test_coverage.md`](../doc/flash_test_coverage.md).
+On-target driver suite: [`flash_test/`](../flash_test/), coverage map [`doc/flash_test_coverage.md`](../doc/flash_test_coverage.md).
 
 - [x] Erase, write, read-back and verify through the on-target test app
 - [x] Edge cases: unaligned addresses, writes crossing page boundaries, sizes that are not a multiple of the page size

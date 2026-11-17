@@ -1,6 +1,6 @@
 # Flash driver test coverage
 
-On-target coverage of the IS25LP128F driver (`flash/`) by the app in `test/`.
+On-target coverage of the IS25LP128F driver (`flash/`) by the app in `flash_test/`.
 Tests run from internal flash after `HSPI1_Init` and `IS25_Init`.
 
 Result: `g_flash_test_result` — `0` pass, `1` not finished, negative = fail code below.
@@ -75,6 +75,6 @@ Destructive region used: sectors `0x0000` and `0x1000` only (8 KB).
 
 ```bash
 git submodule update --init --recursive
-cd test && make
-# flash build/flash_test.elf, run, read g_flash_test_result
+make   # from repo root → flash_test/build/flash_test.elf
+# flash and run; read g_flash_test_result
 ```

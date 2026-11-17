@@ -142,7 +142,7 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 | In the flash driver (`flash/`) | Outside |
 |---|---|
 | Commands, status, QE, BP, timeouts | `loader/`: CubeProgrammer entry points, board clock/GPIO/HSPI, polled HAL tick |
-| Indirect and memory-mapped XSPI command config for this part | `test/`: HSE / SYSCLK / HSPI clock tree, GPIO AF, on-target harness |
+| Indirect and memory-mapped XSPI command config for this part | `flash_test/`: HSE / SYSCLK / HSPI clock tree, GPIO AF, on-target harness |
 | Page splitting and busy polling | `third_party/`: STM32U5 HAL + CMSIS |
 | JEDEC ID check | |
 

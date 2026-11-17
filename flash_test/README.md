@@ -1,4 +1,4 @@
-# test
+# flash_test
 
 On-target test application for the IS25LP128F flash driver. Runs from
 internal flash, brings up HSPI1, then exercises erase / program / read /

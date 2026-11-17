@@ -9,4 +9,4 @@ IS25LP128F driver on the STM32U5 XSPI HAL (HSPI1).
 
 Design: [`doc/flash_driver_design.md`](../doc/flash_driver_design.md).  
 HAL: [`third_party/STM32U5xx_HAL_Driver`](../third_party/STM32U5xx_HAL_Driver).  
-Test app: [`test/`](../test/).
+Test app: [`flash_test/`](../flash_test/).

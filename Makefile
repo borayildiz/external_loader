@@ -4,11 +4,11 @@
 
 .PHONY: build clean docker-build docker-shell docker-clean image
 
-BUILD_DIR := test/build
+BUILD_DIR := flash_test/build
 TOOLCHAIN := $(CURDIR)/cmake/arm-none-eabi.cmake
 
 build:
-	cmake -S test -B $(BUILD_DIR) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN)
+	cmake -S flash_test -B $(BUILD_DIR) -DCMAKE_TOOLCHAIN_FILE=$(TOOLCHAIN)
 	cmake --build $(BUILD_DIR)
 
 clean:
