@@ -15,7 +15,7 @@ Current focus: flash driver + on-target test app.
 | Memory-mapped address | `0xA0000000` |
 | Crystal | 24 MHz HSE (assumption) |
 
-## System concept
+## Technical concept
 
 The application does not run from the MCU's internal flash. It is stored in the external NOR flash and executed from there. Three pieces of software make this work:
 
@@ -37,7 +37,7 @@ flash/         IS25LP128F driver
 loader/        External loader (.stldr) sources — StorageInfo, entry points
 flash_test/    On-target flash driver test app (HSPI bring-up + cases)
 third_party/   STM32U5 HAL + CMSIS (git submodules)
-doc/           System concept, driver design, test coverage
+doc/           Technical concept, driver design, test coverage
 ```
 
 After clone:

@@ -3,7 +3,7 @@
  * @brief External loader entry points for IS25LP128F on STM32U5G9ZJ (milestone 4.2).
  *
  * CubeProgrammer loads this image into RAM and calls these symbols through
- * the debug probe. See doc/system_concept.md §5.
+ * the debug probe. See doc/technical_concept.md §5.
  *
  * Clock / GPIO / HSPI: Loader_BoardInit (loader_board.c).
  * Polled time base: loader_timebase.c (no SysTick IRQ).

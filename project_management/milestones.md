@@ -7,7 +7,7 @@ Goal: concept and first implementation of an external loader (`.stldr`) for the 
 | # | Milestone | Status |
 |---|---|---|
 | 1 | Analyse the inputs | Done |
-| 2 | System concept | Done |
+| 2 | Technical concept | Done |
 | 3 | Flash driver design | Done |
 | 4 | Loader skeleton | Done |
 | 5 | Test and verification strategy | Open |
@@ -22,9 +22,9 @@ Pin down how the flash is connected and which peripheral drives it.
 - [x] Fix the memory-mapped base address: `0xA0000000` (`HSPI1_BASE`)
 - [x] Fix the clock source: 24 MHz HSE crystal (assumption)
 
-## 2. System concept
+## 2. Technical concept
 
-Describe how the pieces fit together. Result: [`doc/system_concept.md`](../doc/system_concept.md).
+Describe how the pieces fit together. Result: [`doc/technical_concept.md`](../doc/technical_concept.md).
 
 - [x] Roles of bootloader, external loader and application
 - [x] Memory map: internal flash, RAM used by the loader, external flash at `0xA0000000`

@@ -16,7 +16,7 @@
  * Only the first ~256 KB of SRAM1 is claimed so CubeProgrammer still has
  * room for its program buffer in the rest of the 768 KB SRAM1.
  *
- * See doc/system_concept.md (memory map, polled time base).
+ * See doc/technical_concept.md (memory map, polled time base).
  */
 ENTRY(Init)
 

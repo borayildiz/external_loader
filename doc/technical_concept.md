@@ -1,4 +1,4 @@
-# System concept
+# Technical concept
 
 This document describes how the application is stored in and executed from the external NOR flash, and where the external loader fits in.
 

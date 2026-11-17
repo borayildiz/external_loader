@@ -138,7 +138,7 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 | Memory-mapped read | `EBh` + 6 dummy + mode `0x00` | Default flash setting; safe at 24 MHz and up to 81 MHz |
 | Reset on every init | Software `66h`/`99h` | No dedicated reset line once QE is set; MCU reset does not reset the flash |
 | Protection | Clear BP in init and before chip erase | Chip erase is a no-op if any BP bit is set |
-| HAL usage | Polling only | Loader has no interrupt vector table; see [polled time base](system_concept.md#polled-time-base) (`loader/Src/loader_timebase.c`) |
+| HAL usage | Polling only | Loader has no interrupt vector table; see [polled time base](technical_concept.md#polled-time-base) (`loader/Src/loader_timebase.c`) |
 
 ## 8. Ownership boundary
 
@@ -152,4 +152,4 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 ## References
 
 - [IS25LP128F datasheet](https://www.issi.com/WW/pdf/25LP-WP128F.pdf) (ISSI, Rev. A10): Tables 6.11, 8.3, 8.7; sections 8.9, 9.6, 9.8, 9.9
-- [doc/system_concept.md](system_concept.md) — roles of loader vs bootloader and memory map
+- [doc/technical_concept.md](technical_concept.md) — roles of loader vs bootloader and memory map
