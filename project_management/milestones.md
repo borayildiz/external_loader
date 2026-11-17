@@ -60,9 +60,12 @@ The core deliverable.
 
 ## 5. Test and verification strategy
 
-- [ ] Erase, write, read-back and verify through STM32CubeProgrammer
-- [ ] Edge cases: unaligned addresses, writes crossing page boundaries, sizes that are not a multiple of the page size
+On-target driver suite: [`test/`](../test/), coverage map [`doc/flash_test_coverage.md`](../doc/flash_test_coverage.md).
+
+- [x] Erase, write, read-back and verify through the on-target test app
+- [x] Edge cases: unaligned addresses, writes crossing page boundaries, sizes that are not a multiple of the page size
 - [ ] Error handling: timeouts, wrong JEDEC ID, protected sectors
+- [ ] Erase, write, read-back and verify through STM32CubeProgrammer (loader)
 - [ ] Run on hardware if a board is available
 
 ## 6. Bootloader and application integration (stretch)

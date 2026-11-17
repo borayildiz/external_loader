@@ -16,3 +16,6 @@ Startup / system files come from `third_party/CMSIS_Device_U5`. HAL from
 `third_party/STM32U5xx_HAL_Driver`.
 
 After a run, inspect `g_flash_test_result` in the debugger (`0` = pass).
+
+Coverage (cases, fail codes, API matrix, gaps):
+[`doc/flash_test_coverage.md`](../doc/flash_test_coverage.md).
