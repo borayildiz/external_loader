@@ -112,20 +112,18 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 **Loader / bootloader init**
 
 1. Board code: clocks, GPIO, HSPI1 in indirect mode.
-2. `IS25_Init` → reset, read ID, enable quad if needed, clear BP bits, enter memory-mapped mode (loader) or leave ready for map (bootloader).
+2. `IS25_Init` → reset, read ID, enable quad if needed, clear BP bits (stays in indirect mode).
+3. Loader/bootloader calls `IS25_EnableMemoryMapped` when it needs XIP or programmer read-back.
 
 **Sector erase / program (loader)**
 
-1. `IS25_DisableMemoryMapped`
-2. Per sector: write enable → sector erase → wait busy
-3. Per page chunk: write enable → page program → wait busy  
-   (`Program` splits crosses of page boundaries itself.)
-4. Caller may re-enter memory-mapped mode for verify.
+1. `IS25_DisableMemoryMapped` (also done automatically inside erase/program helpers)
+2. `IS25_EraseSector` / `IS25_Program` (each does write enable + WIP poll; program splits page boundaries)
+3. Caller may re-enter memory-mapped mode for verify.
 
 **Mass erase**
 
-1. Leave memory-mapped mode.
-2. `IS25_EraseChip` (clears BP, write enable, `C7h`, wait up to chip-erase timeout).
+1. `IS25_EraseChip` (clears BP, write enable, `C7h`, wait up to chip-erase timeout).
 
 ## 7. Design decisions
 
@@ -141,12 +139,12 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 
 ## 8. Ownership boundary
 
-| In the flash driver | Outside (board / loader) |
+| In the flash driver (`flash/`) | Outside |
 |---|---|
-| Commands, status, QE, BP, timeouts | HSE / SYSCLK / HSPI clock tree |
-| Indirect and memory-mapped XSPI command config for this part | GPIO alternate functions for PH9–PH13, PI3 |
-| Page splitting and busy polling | `StorageInfo`, CubeProgrammer entry points |
-| JEDEC ID check | Linker script, `.stldr` packaging |
+| Commands, status, QE, BP, timeouts | `test/`: HSE / SYSCLK / HSPI clock tree and GPIO AF |
+| Indirect and memory-mapped XSPI command config for this part | `test/`: on-target test harness and linker script |
+| Page splitting and busy polling | `third_party/`: STM32U5 HAL + CMSIS |
+| JEDEC ID check | |
 
 ## References
 
