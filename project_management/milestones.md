@@ -12,7 +12,7 @@ Goal: concept and first implementation of an external loader (`.stldr`) for the 
 | 4 | Loader skeleton | Done |
 | 5 | Test and verification strategy | Open |
 | 6 | Bootloader and application integration (stretch) | Open |
-| 7 | Documentation | In progress |
+| 7 | Documentation | Done |
 
 ## 1. Analyse the inputs
 
@@ -80,7 +80,7 @@ Concept level only.
 
 - [x] Top-level `README.md` with hardware summary and system concept
 - [x] Design decisions and trade-offs — [`doc/design_decisions.md`](../doc/design_decisions.md)
-- [ ] Known gaps and next steps
+- [x] Known gaps and next steps — [`doc/known_gaps_and_next_steps.md`](../doc/known_gaps_and_next_steps.md)
 
 ## Assumptions
 - The crystal frequency of 24 MHz is an assumption.

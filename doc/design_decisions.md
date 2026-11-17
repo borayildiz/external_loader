@@ -76,4 +76,5 @@ Summary of choices documented in [`flash_driver_design.md`](flash_driver_design.
 - [`system_concept.md`](system_concept.md) — roles, memory map, programming flow, polled time base
 - [`flash_driver_design.md`](flash_driver_design.md) — geometry, commands, driver API
 - [`flash_test_coverage.md`](flash_test_coverage.md) — on-target cases and fail codes
+- [`known_gaps_and_next_steps.md`](known_gaps_and_next_steps.md) — gaps backlog and recommended order of work
 - [`../project_management/milestones.md`](../project_management/milestones.md) — status and open points

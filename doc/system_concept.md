@@ -163,7 +163,7 @@ The loader therefore keeps interrupts off and replaces the HAL tick with a **pol
 - The HSPI1 clock frequency for the bootloader is not chosen yet.
 - **Field update without CubeProgrammer.** The `.stldr` path is for bring-up and production programming with a debug probe. In the field, application updates must go through a product mechanism (bootloader + UART/USB/CAN/OTA) that reuses the flash driver, verifies the image, and restarts into XIP — details still undefined (transport, image layout, A/B slots, rollback).
 - **Application IP protection.** External NOR is readable offline; XIP does not hide the binary. A later security design may need encrypted storage / OTFDEC, keys inside the MCU, and signed images — coordinated with the field-update path. See also [milestones open points](../project_management/milestones.md#open-points).
-- **ICACHE / DCACHE.** Loader/`flash_test` leave caches off; residual enabled caches can still break mmap verify after program. Bootloader + XIP later needs ICACHE (remap), MPU for HSPI, and a DCACHE1 policy. Details: [milestones open points](../project_management/milestones.md#open-points).
+- **ICACHE / DCACHE.** Loader/`flash_test` leave caches off; residual enabled caches can still break mmap verify after program. Bootloader + XIP later needs ICACHE (remap), MPU for HSPI, and a DCACHE1 policy. Details: [milestones open points](../project_management/milestones.md#open-points); backlog: [`known_gaps_and_next_steps.md`](known_gaps_and_next_steps.md).
 
 ## References
 
