@@ -5,7 +5,23 @@ services:
     volumes:
       - .:/work
     working_dir: /work
-    command: ["make", "build"]
+    command: ["make", "all"]
+
+  build-flash-test:
+    image: xflash-generic-build
+    build: .
+    volumes:
+      - .:/work
+    working_dir: /work
+    command: ["make", "flash_test"]
+
+  build-loader:
+    image: xflash-generic-build
+    build: .
+    volumes:
+      - .:/work
+    working_dir: /work
+    command: ["make", "loader"]
 
   shell:
     image: xflash-generic-build

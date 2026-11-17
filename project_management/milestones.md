@@ -9,7 +9,7 @@ Goal: concept and first implementation of an external loader (`.stldr`) for the 
 | 1 | Analyse the inputs | Done |
 | 2 | System concept | Done |
 | 3 | Flash driver design | Done |
-| 4 | Loader skeleton | Open |
+| 4 | Loader skeleton | Done |
 | 5 | Test and verification strategy | Open |
 | 6 | Bootloader and application integration (stretch) | Open |
 | 7 | Documentation | In progress |
@@ -56,7 +56,7 @@ The core deliverable.
 - [x] Clock and GPIO setup inside `Init`: SYSCLK from the 24 MHz HSE without PLL, HSPI clocked from SYSCLK
 - [x] Polling instead of interrupts, no dependency on SysTick interrupts
 - [x] Linker script for execution from RAM
-- [ ] Build that outputs the ELF as `.stldr`
+- [x] Build that outputs the ELF as `.stldr`
 
 ## 5. Test and verification strategy
 

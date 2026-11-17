@@ -46,6 +46,24 @@ After clone:
 git submodule update --init --recursive
 ```
 
+## Build
+
+ARM GCC and CMake live in the container; the repo is bind-mounted at `/work`.
+Run make from the **repo root** (not from `flash_test/` or `loader/`).
+
+Inside the container:
+
+```bash
+make                 # both targets
+make flash_test      # → flash_test/build/flash_test.elf
+make loader          # → loader/build/IS25LP128F_STM32U5G9ZJ.stldr
+make clean
+make clean-flash_test
+make clean-loader
+```
+
+Copy the `.stldr` into STM32CubeProgrammer’s `bin/ExternalLoader` directory to use it.
+
 ## References
 
 - [STM32U5G9ZJ datasheet](https://www.st.com/resource/en/datasheet/stm32u5g9zj.pdf) (STMicroelectronics, DS14102 Rev 5)
