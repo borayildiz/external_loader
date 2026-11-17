@@ -63,6 +63,23 @@ docker compose run --rm build          # one-shot make -C test
 docker compose run --rm shell          # bash
 ```
 
+## IDE in the container (Cursor / VS Code)
+
+Cursor stays on the host and attaches into the container (Dev Containers). The terminal and toolchain then run inside Docker.
+
+1. Install the **Dev Containers** extension (Anysphere / Cursor).
+2. Open this repo in Cursor.
+3. Command Palette (`Cmd+Shift+P`) → **Dev Containers: Reopen in Container**.
+4. Wait for the image build; the status bar shows you are in the container.
+5. In the integrated terminal: `make -C test`.
+
+Config: [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) (uses the same `Dockerfile`).
+
+To leave: **Dev Containers: Reopen Folder Locally**.  
+To refresh after Dockerfile changes: **Dev Containers: Rebuild Container**.
+
+Alternative without Dev Containers: keep Cursor local and only use `make docker-build` / `make docker-shell` for compiles.
+
 Details: [doc/system_concept.md](doc/system_concept.md), [doc/flash_driver_design.md](doc/flash_driver_design.md), [doc/flash_test_coverage.md](doc/flash_test_coverage.md).
 
 ## References

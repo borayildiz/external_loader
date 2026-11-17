@@ -1,0 +1,26 @@
+{
+  "name": "xflash-generic",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/work",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/work,type=bind,consistency=cached",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.makefile-tools"
+      ],
+      "settings": {
+        "clangd.arguments": [
+          "--query-driver=/usr/bin/arm-none-eabi-*"
+        ],
+        "makefile.configureOnOpen": true
+      }
+    }
+  },
+  "postCreateCommand": "git submodule update --init --recursive",
+  "forwardPorts": [],
+  "remoteUser": "root"
+}
