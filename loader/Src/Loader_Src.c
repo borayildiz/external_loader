@@ -6,7 +6,7 @@
  * the debug probe. See doc/system_concept.md §5.
  *
  * Clock / GPIO / HSPI: Loader_BoardInit (loader_board.c).
- * Polled time base without SysTick IRQ: milestone 4.4.
+ * Polled time base: loader_timebase.c (no SysTick IRQ).
  */
 #include "Loader_Src.h"
 #include "loader_board.h"
@@ -36,30 +36,6 @@ static int Loader_OffsetInRange(uint32_t offset, uint32_t size)
     return 0;
   }
   return 1;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Minimal HAL tick stubs (replaced by polled time base in milestone 4.4)     */
-/* -------------------------------------------------------------------------- */
-
-KeepInCompilation HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
-{
-  (void)TickPriority;
-  /* Do not start SysTick IRQ — loader has no vector table in use. */
-  return HAL_OK;
-}
-
-uint32_t HAL_GetTick(void)
-{
-  return uwTick;
-}
-
-void HAL_Delay(uint32_t Delay)
-{
-  /* Busy-wait placeholder until 4.4 provides a real time base. */
-  volatile uint32_t n = Delay * 4000u;
-  while (n-- != 0u) {
-  }
 }
 
 /* -------------------------------------------------------------------------- */

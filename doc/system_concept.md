@@ -125,9 +125,21 @@ How the loader works:
 Constraints that follow from running this way:
 
 - **No startup code.** `Init` has to clear its own zero-initialised data and call the system initialisation itself.
-- **No interrupts.** No vector table is set up, so the HAL tick cannot be driven by SysTick interrupts. The loader replaces the HAL time base with a polled one so that timeouts still work.
+- **No interrupts.** See [Polled time base](#polled-time-base) below.
 - **Repeatable.** `Init` can be called more than once and after a previous run of the bootloader or application, so it must not depend on the state of the clocks, HSPI1 or the flash.
 - **Small and self-contained.** Code and data must fit in RAM next to the programmer's data buffer; only polling HAL functions are used.
+
+### Polled time base
+
+The loader is not normal application firmware. CubeProgrammer copies the `.stldr` image into RAM and invokes `Init`, `Write`, erase and verify through the debug probe. There is no reset handler, no `main`, and no usable interrupt vector table for that session.
+
+A default HAL setup that relies on **SysTick IRQ → `HAL_IncTick` → `HAL_GetTick`** therefore never runs. Without a replacement time base:
+
+- HAL / XSPI **timeouts hang or fail** (command waits, WIP polling after program/erase)
+- Long operations such as **chip erase** (tens of seconds) become unreliable
+- Enabling SysTick (or any) interrupts without a proper vector table risks a **fault or lockup**
+
+The loader therefore keeps interrupts off and replaces the HAL tick with a **polled** implementation (`loader/Src/loader_timebase.c`): SysTick runs as a free-running HCLK down-counter with `TICKINT` clear; `HAL_GetTick()` samples the counter and advances `uwTick` in software. That keeps erase/program/verify timeouts correct while the loader stays interrupt-free.
 
 ## 6. Clock concept
 

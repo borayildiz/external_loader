@@ -135,14 +135,14 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 | Memory-mapped read | `EBh` + 6 dummy + mode `0x00` | Default flash setting; safe at 24 MHz and up to 81 MHz |
 | Reset on every init | Software `66h`/`99h` | No dedicated reset line once QE is set; MCU reset does not reset the flash |
 | Protection | Clear BP in init and before chip erase | Chip erase is a no-op if any BP bit is set |
-| HAL usage | Polling only | Loader has no interrupt vector table |
+| HAL usage | Polling only | Loader has no interrupt vector table; see [polled time base](system_concept.md#polled-time-base) (`loader/Src/loader_timebase.c`) |
 
 ## 8. Ownership boundary
 
 | In the flash driver (`flash/`) | Outside |
 |---|---|
-| Commands, status, QE, BP, timeouts | `test/`: HSE / SYSCLK / HSPI clock tree and GPIO AF |
-| Indirect and memory-mapped XSPI command config for this part | `test/`: on-target test harness and linker script |
+| Commands, status, QE, BP, timeouts | `loader/`: CubeProgrammer entry points, board clock/GPIO/HSPI, polled HAL tick |
+| Indirect and memory-mapped XSPI command config for this part | `test/`: HSE / SYSCLK / HSPI clock tree, GPIO AF, on-target harness |
 | Page splitting and busy polling | `third_party/`: STM32U5 HAL + CMSIS |
 | JEDEC ID check | |
 
