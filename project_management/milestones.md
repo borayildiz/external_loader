@@ -53,7 +53,7 @@ The core deliverable.
 
 - [x] `Dev_Inf.c` with the `StorageInfo` struct: base `0xA0000000`, size `0x01000000`, page size `0x100`, sector size `0x1000`
 - [x] `Loader_Src.c` with `Init`, `Write`, `SectorErase`, `MassErase`, and optionally `Read`, `Verify` and `CheckSum`
-- [ ] Clock and GPIO setup inside `Init`: SYSCLK from the 24 MHz HSE without PLL, HSPI clocked from SYSCLK
+- [x] Clock and GPIO setup inside `Init`: SYSCLK from the 24 MHz HSE without PLL, HSPI clocked from SYSCLK
 - [ ] Polling instead of interrupts, no dependency on SysTick interrupts
 - [ ] Linker script for execution from RAM
 - [ ] Build that outputs the ELF as `.stldr`

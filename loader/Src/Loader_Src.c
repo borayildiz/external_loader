@@ -5,7 +5,7 @@
  * CubeProgrammer loads this image into RAM and calls these symbols through
  * the debug probe. See doc/system_concept.md §5.
  *
- * Clock / GPIO / HSPI: Loader_BoardInit (milestone 4.3).
+ * Clock / GPIO / HSPI: Loader_BoardInit (loader_board.c).
  * Polled time base without SysTick IRQ: milestone 4.4.
  */
 #include "Loader_Src.h"
@@ -36,20 +36,6 @@ static int Loader_OffsetInRange(uint32_t offset, uint32_t size)
     return 0;
   }
   return 1;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Weak board hooks — strong definitions in milestone 4.3                     */
-/* -------------------------------------------------------------------------- */
-
-__attribute__((weak)) int Loader_BoardInit(void)
-{
-  return -1;
-}
-
-__attribute__((weak)) XSPI_HandleTypeDef *Loader_GetXspiHandle(void)
-{
-  return NULL;
 }
 
 /* -------------------------------------------------------------------------- */
