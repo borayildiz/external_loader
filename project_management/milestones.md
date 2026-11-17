@@ -82,8 +82,11 @@ Concept level only.
 - [ ] Design decisions and trade-offs
 - [ ] Known gaps and next steps
 
-## Open points
-
-- The loader format `.stldr` works with STM32CubeProgrammer (ST-Link, and J-Link through CubeProgrammer). Native SEGGER tools need a different loader format.
+## Assumptions
 - The crystal frequency of 24 MHz is an assumption.
+
+## Open points
+- **Field firmware update without STM32CubeProgrammer.** Today the only programmed path in scope is the debug-probe + `.stldr` flow (lab / factory). A real product needs a way to replace the application in external NOR without CubeProgrammer or a debugger — for example a bootloader that accepts an image over UART/USB/CAN/OTA, writes it through the same flash driver, verifies it, then jumps. Open: transport, image format, dual-bank or A/B slotting, rollback on failed update, and whether update runs from internal flash only (so HSPI can be reconfigured safely).
+- **Protecting application IP on external flash.** The app image lives in the IS25LP128F and is memory-mapped for XIP, so it can be dumped by reading the NOR chip or probing HSPI. TrustZone alone does not encrypt that content. Open: whether to use STM32U5 on-the-fly decryption (OTFDEC) for encrypted XIP, where keys live (OTP / internal flash under RDP), and how secure boot ties into signing/encrypting images before they are programmed — including how that interacts with the field-update path above.
+- The loader format `.stldr` works with STM32CubeProgrammer (ST-Link, and J-Link through CubeProgrammer). Native SEGGER tools need a different loader format.
 

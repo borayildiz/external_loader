@@ -161,6 +161,8 @@ The loader therefore keeps interrupts off and replaces the HAL tick with a **pol
 - The MCU boots from internal flash (BOOT0 low).
 - JEDEC ID is `9Dh 60h 18h`; `EBh` uses the default 6 dummy cycles (valid up to 81 MHz). See [`doc/flash_driver_design.md`](flash_driver_design.md).
 - The HSPI1 clock frequency for the bootloader is not chosen yet.
+- **Field update without CubeProgrammer.** The `.stldr` path is for bring-up and production programming with a debug probe. In the field, application updates must go through a product mechanism (bootloader + UART/USB/CAN/OTA) that reuses the flash driver, verifies the image, and restarts into XIP — details still undefined (transport, image layout, A/B slots, rollback).
+- **Application IP protection.** External NOR is readable offline; XIP does not hide the binary. A later security design may need encrypted storage / OTFDEC, keys inside the MCU, and signed images — coordinated with the field-update path. See also [milestones open points](../project_management/milestones.md#open-points).
 
 ## References
 
