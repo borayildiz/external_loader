@@ -37,8 +37,10 @@ flash/         IS25LP128F driver
 loader/        External loader (.stldr) sources — StorageInfo, entry points
 flash_test/    On-target flash driver test app (HSPI bring-up + cases)
 third_party/   STM32U5 HAL + CMSIS (git submodules)
-doc/           System concept and driver design
+doc/           System concept, driver design, design decisions
 ```
+
+Design decisions and trade-offs: [`doc/design_decisions.md`](doc/design_decisions.md).
 
 After clone:
 

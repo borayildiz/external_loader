@@ -79,7 +79,7 @@ Concept level only.
 ## 7. Documentation
 
 - [x] Top-level `README.md` with hardware summary and system concept
-- [ ] Design decisions and trade-offs
+- [x] Design decisions and trade-offs — [`doc/design_decisions.md`](../doc/design_decisions.md)
 - [ ] Known gaps and next steps
 
 ## Assumptions
@@ -88,5 +88,6 @@ Concept level only.
 ## Open points
 - **Field firmware update without STM32CubeProgrammer.** Today the only programmed path in scope is the debug-probe + `.stldr` flow (lab / factory). A real product needs a way to replace the application in external NOR without CubeProgrammer or a debugger — for example a bootloader that accepts an image over UART/USB/CAN/OTA, writes it through the same flash driver, verifies it, then jumps. Open: transport, image format, dual-bank or A/B slotting, rollback on failed update, and whether update runs from internal flash only (so HSPI can be reconfigured safely).
 - **Protecting application IP on external flash.** The app image lives in the IS25LP128F and is memory-mapped for XIP, so it can be dumped by reading the NOR chip or probing HSPI. TrustZone alone does not encrypt that content. Open: whether to use STM32U5 on-the-fly decryption (OTFDEC) for encrypted XIP, where keys live (OTP / internal flash under RDP), and how secure boot ties into signing/encrypting images before they are programmed — including how that interacts with the field-update path above.
+- **ICACHE / DCACHE for HSPI memory-mapped access.** The U5G9 has ICACHE and DCACHE1 (external OCTOSPI/HSPI/FSMC). The loader and `flash_test` do not enable caches today; CubeProgrammer may still call `Init` after firmware left them on, so stale cache lines can make mmap `Read`/`Verify`/`CheckSum` wrong after erase/program. Open: disable/invalidate ICACHE and DCACHE1 in loader `Init` (and after writes before mmap verify) for coherency; for bootloader + XIP app (milestone 6), enable ICACHE (likely with remap into the Code region), set MPU attributes for `0xA0000000`, and decide DCACHE1 policy plus invalidate-before-jump after any image update.
 - The loader format `.stldr` works with STM32CubeProgrammer (ST-Link, and J-Link through CubeProgrammer). Native SEGGER tools need a different loader format.
 
