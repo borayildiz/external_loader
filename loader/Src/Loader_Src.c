@@ -13,11 +13,25 @@
 #include "is25lp128f.h"
 
 #include <stddef.h>
+#include <stdint.h>
 #include <string.h>
+
+/* From loader/STM32U5G9ZJTx_RAM.ld — zeroed in Init (no C runtime). */
+extern uint32_t _sbss;
+extern uint32_t _ebss;
 
 /* -------------------------------------------------------------------------- */
 /* Address helpers                                                            */
 /* -------------------------------------------------------------------------- */
+
+static void Loader_ZeroBss(void)
+{
+  for (uint32_t *p = &_sbss; p < &_ebss; p++) {
+    *p = 0u;
+  }
+}
+
+
 
 static uint32_t Loader_ToOffset(uint32_t address)
 {
@@ -46,10 +60,9 @@ KeepInCompilation int Init(void)
 {
   XSPI_HandleTypeDef *hxspi;
 
-  /*
-   * No C runtime: zero .bss when the RAM linker script exports the symbols
-   * (milestone 4.5). Until then, rely on the programmer loading a clean image.
-   */
+  /* No C runtime / startup: clear .bss before any static state is used. */
+  Loader_ZeroBss();
+
   SystemInit();
 
   if (HAL_Init() != HAL_OK) {

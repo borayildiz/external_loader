@@ -55,7 +55,7 @@ The core deliverable.
 - [x] `Loader_Src.c` with `Init`, `Write`, `SectorErase`, `MassErase`, and optionally `Read`, `Verify` and `CheckSum`
 - [x] Clock and GPIO setup inside `Init`: SYSCLK from the 24 MHz HSE without PLL, HSPI clocked from SYSCLK
 - [x] Polling instead of interrupts, no dependency on SysTick interrupts
-- [ ] Linker script for execution from RAM
+- [x] Linker script for execution from RAM
 - [ ] Build that outputs the ELF as `.stldr`
 
 ## 5. Test and verification strategy

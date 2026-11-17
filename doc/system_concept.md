@@ -56,7 +56,7 @@ Software layers inside the loader and the bootloader:
 | Region | Start | End | Size | Content |
 |---|---|---|---|---|
 | Internal flash | `0x08000000` | `0x083FFFFF` | 4 MB | Bootloader |
-| SRAM1 | `0x20000000` | `0x200BFFFF` | 768 KB | Loader code and data while programming (linked from `0x20000004`); bootloader and application data otherwise |
+| SRAM1 | `0x20000000` | `0x200BFFFF` | 768 KB | Loader code and data while programming (linked from `0x20000004`, see `loader/STM32U5G9ZJTx_RAM.ld`); bootloader and application data otherwise. The loader image uses only the lower ~256 KB so CubeProgrammer can keep a data buffer in the rest. |
 | HSPI1 registers | `0x420D3400` | – | – | Interface control |
 | External flash, memory-mapped | `0xA0000000` | `0xA0FFFFFF` | 16 MB | Application: vector table at `0xA0000000`, then code and constants |
 
