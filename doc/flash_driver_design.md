@@ -140,16 +140,5 @@ int32_t IS25_DisableMemoryMapped(void); /* back to indirect for erase/program */
 | Protection | Clear BP in init and before chip erase | Chip erase is a no-op if any BP bit is set |
 | HAL usage | Polling only | Loader has no interrupt vector table; see [polled time base](technical_concept.md#polled-time-base) (`loader/Src/loader_timebase.c`) |
 
-## 8. Ownership boundary
 
-| In the flash driver (`flash/`) | Outside |
-|---|---|
-| Commands, status, QE, BP, timeouts | `loader/`: CubeProgrammer entry points, board clock/GPIO/HSPI, polled HAL tick |
-| Indirect and memory-mapped XSPI command config for this part | `flash_test/`: HSE / SYSCLK / HSPI clock tree, GPIO AF, on-target harness |
-| Page splitting and busy polling | `third_party/`: STM32U5 HAL + CMSIS |
-| JEDEC ID check | |
 
-## References
-
-- [IS25LP128F datasheet](https://www.issi.com/WW/pdf/25LP-WP128F.pdf) (ISSI, Rev. A10): Tables 6.11, 8.3, 8.7; sections 8.9, 9.6, 9.8, 9.9
-- [doc/technical_concept.md](technical_concept.md) — roles of loader vs bootloader and memory map

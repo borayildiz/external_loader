@@ -57,7 +57,7 @@ flash/         IS25LP128F driver
 loader/        External loader (.stldr) sources — StorageInfo, entry points
 flash_test/    On-target flash driver test app (HSPI bring-up + cases)
 third_party/   STM32U5 HAL + CMSIS (git submodules)
-doc/           Technical concept, driver design, test coverage
+doc/           Technical concept, loader design, driver design, test coverage
 ```
 
 After clone:
@@ -83,6 +83,13 @@ make clean-loader
 ```
 
 Copy the `.stldr` into STM32CubeProgrammer’s `bin/ExternalLoader` directory to use it.
+
+## Docs
+
+- [Technical concept](doc/technical_concept.md) — bootloader / loader / app roles, memory map
+- [Loader design](doc/loader_design.md) — `.stldr` layout, entry points, board bring-up, polled tick
+- [Flash driver design](doc/flash_driver_design.md) — IS25LP128F API and commands
+- [Flash test coverage](doc/flash_test_coverage.md) — on-target driver suite
 
 ## References
 
