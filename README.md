@@ -15,7 +15,7 @@ Current focus: flash driver + on-target test app.
 | Memory-mapped address | `0xA0000000` |
 | Crystal | 24 MHz HSE (assumption) |
 
-## Technical concept
+## System concept
 
 The application does not run from the MCU's internal flash. It is stored in the external NOR flash and executed from there. Three pieces of software make this work:
 
@@ -25,9 +25,29 @@ The application does not run from the MCU's internal flash. It is stored in the 
 
 ```mermaid
 flowchart LR
-    CP["STM32CubeProgrammer"] -->|"debug probe"| L["MCU RAM<br/>external loader"]
-    L -->|"init + program via HSPI1"| F["External NOR flash<br/>application at 0xA0000000"]
-    B["Internal flash<br/>bootloader"] -->|"init + configure memory map via HSPI1, then jump"| F
+    subgraph PC["Development PC"]
+        IMG["Application image"]
+        STLDR["Loader file (.stldr)"]
+        CP["STM32CubeProgrammer"]
+        IMG --> CP
+        STLDR --> CP
+    end
+
+    PROBE["Debug probe (SWD)"]
+
+    subgraph MCU["STM32U5G9ZJ"]
+        RAM["SRAM1: external loader<br/>(only while programming)"]
+        IFLASH["Internal flash: bootloader"]
+        HSPI["HSPI1"]
+        RAM --> HSPI
+        IFLASH --> HSPI
+    end
+
+    XFLASH["IS25LP128F<br/>application at 0xA0000000"]
+
+    CP --> PROBE
+    PROBE --> RAM
+    HSPI -->|"NCS, CLK, IO0-IO3"| XFLASH
 ```
 
 ## Source layout
