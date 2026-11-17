@@ -51,7 +51,7 @@ A small driver layer on top of the XSPI HAL, kept separate so the bootloader can
 
 The core deliverable.
 
-- [ ] `Dev_Inf.c` with the `StorageInfo` struct: base `0xA0000000`, size `0x01000000`, page size `0x100`, sector size `0x1000`
+- [x] `Dev_Inf.c` with the `StorageInfo` struct: base `0xA0000000`, size `0x01000000`, page size `0x100`, sector size `0x1000`
 - [ ] `Loader_Src.c` with `Init`, `Write`, `SectorErase`, `MassErase`, and optionally `Read`, `Verify` and `CheckSum`
 - [ ] Clock and GPIO setup inside `Init`: SYSCLK from the 24 MHz HSE without PLL, HSPI clocked from SYSCLK
 - [ ] Polling instead of interrupts, no dependency on SysTick interrupts
