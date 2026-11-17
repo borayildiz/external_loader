@@ -15,15 +15,10 @@ Release/
 *.exe
 *.out
 
-# Toolchain / deps
+# Toolchain / IDE local
 *.launch
 *.mxproject
 .mxproject
-Drivers/
-Middlewares/
-CMSIS/
-
-# IDE
 .idea/
 .vscode/
 *.code-workspace
@@ -51,13 +46,13 @@ EWARM/Backup*/
 Listings/
 Objects/
 
-# Python tooling (if any)
+# Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
 
-# Secrets / local config
+# Secrets
 .env
 .env.*
 *.pem
