@@ -90,6 +90,7 @@ Copy the `.stldr` into STM32CubeProgrammer’s `bin/ExternalLoader` directory to
 - [Loader design](doc/loader_design.md) — `.stldr` layout, entry points, board bring-up, polled tick
 - [Flash driver design](doc/flash_driver_design.md) — IS25LP128F API and commands
 - [Flash test coverage](doc/flash_test_coverage.md) — on-target driver suite
+- [Corner cases](doc/corner_cases/cache_coherence.md) — ICACHE/DCACHE vs Verify
 
 ## References
 
