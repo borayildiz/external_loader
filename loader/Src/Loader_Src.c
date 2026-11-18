@@ -69,6 +69,11 @@ KeepInCompilation int Init(void)
     return LOADER_FAIL;
   }
 
+  /* Prior firmware may have left caches hot with old 0xA0… lines. */
+  if (Loader_DisableCaches() != 0) {
+    return LOADER_FAIL;
+  }
+
   if (Loader_BoardInit() != 0) {
     return LOADER_FAIL;
   }
@@ -164,6 +169,10 @@ KeepInCompilation int Read(uint32_t Address, uint32_t Size, uint8_t *buffer)
     return LOADER_FAIL;
   }
 
+  if (Loader_DisableCaches() != 0) {
+    return LOADER_FAIL;
+  }
+
   if (IS25_EnableMemoryMapped() != IS25_OK) {
     return LOADER_FAIL;
   }
@@ -183,6 +192,8 @@ KeepInCompilation uint32_t CheckSum(uint32_t StartAddress, uint32_t Size, uint32
   uint8_t missalignementSize    = (uint8_t)Size;
   uint32_t cnt;
   uint32_t Val;
+
+  (void)Loader_DisableCaches();
 
   StartAddress -= StartAddress % 4u;
   Size += (Size % 4u == 0u) ? 0u : (4u - (Size % 4u));
@@ -252,6 +263,10 @@ KeepInCompilation uint64_t Verify(uint32_t MemoryAddr, uint32_t RAMBufferAddr,
 
   /* Size is in words from CubeProgrammer. */
   Size *= 4u;
+
+  if (Loader_DisableCaches() != 0) {
+    return LOADER_FAIL;
+  }
 
   if (IS25_EnableMemoryMapped() != IS25_OK) {
     return LOADER_FAIL;

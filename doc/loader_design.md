@@ -118,9 +118,12 @@ Addresses from the programmer are **absolute** (`0xA0…`). Helpers subtract `EX
 1. `Loader_ZeroBss`
 2. `SystemInit`
 3. `HAL_Init` (installs polled tick via `HAL_InitTick` override)
-4. `Loader_BoardInit` → HSE 24 MHz SYSCLK, HSPI1 + pins
-5. `IS25_Init` → software reset, JEDEC check, QE, clear BP (indirect mode)
-6. `IS25_EnableMemoryMapped` → programmer can read the `0xA0000000` window
+4. `Loader_DisableCaches` → ICACHE off; DCACHE1 invalidate + off (stale mmap lines)
+5. `Loader_BoardInit` → HSE 24 MHz SYSCLK, HSPI1 + pins
+6. `IS25_Init` → software reset, JEDEC check, QE, clear BP (indirect mode)
+7. `IS25_EnableMemoryMapped` → programmer can read the `0xA0000000` window
+
+`Read` / `Verify` / `CheckSum` call `Loader_DisableCaches` again before mmap loads. Detail: [`corner_cases/cache_coherence.md`](corner_cases/cache_coherence.md).
 
 ### Mode switching
 

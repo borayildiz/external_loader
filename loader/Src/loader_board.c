@@ -70,6 +70,34 @@ static int Loader_HSPI1_Init(void)
   return 0;
 }
 
+int Loader_DisableCaches(void)
+{
+  DCACHE_HandleTypeDef hdcache = {0};
+
+  /* Disable auto-starts ICACHE invalidation. */
+  if (HAL_ICACHE_Disable() != HAL_OK) {
+    return -1;
+  }
+
+  __HAL_RCC_DCACHE1_CLK_ENABLE();
+
+  hdcache.Instance           = DCACHE1;
+  hdcache.Init.ReadBurstType = DCACHE_READ_BURST_INCR;
+  hdcache.State              = HAL_DCACHE_STATE_READY;
+
+  /* Invalidate while still on (drops stale 0xA0… lines), then leave off. */
+  if (HAL_DCACHE_IsEnabled(&hdcache) != 0U) {
+    if (HAL_DCACHE_Invalidate(&hdcache) != HAL_OK) {
+      return -1;
+    }
+  }
+  if (HAL_DCACHE_Disable(&hdcache) != HAL_OK) {
+    return -1;
+  }
+
+  return 0;
+}
+
 int Loader_BoardInit(void)
 {
   if (Loader_SystemClock_Config() != 0) {

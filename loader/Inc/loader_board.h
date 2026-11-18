@@ -16,6 +16,13 @@ extern "C" {
 /** Configure SYSCLK (24 MHz HSE), GPIO, and HSPI1. 0 = ok, non-zero = fail. */
 int Loader_BoardInit(void);
 
+/**
+ * Disable ICACHE and DCACHE1 (invalidate DCACHE first).
+ * Needed so mmap Verify/Read see NOR after indirect erase/program.
+ * 0 = ok, non-zero = fail.
+ */
+int Loader_DisableCaches(void);
+
 /** HSPI1 handle bound by Loader_BoardInit. */
 XSPI_HandleTypeDef *Loader_GetXspiHandle(void);
 

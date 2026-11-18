@@ -11,9 +11,11 @@ extern "C" {
 
 #define HAL_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
+#define HAL_DCACHE_MODULE_ENABLED
 #define HAL_DMA_MODULE_ENABLED
 #define HAL_FLASH_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
+#define HAL_ICACHE_MODULE_ENABLED
 #define HAL_PWR_MODULE_ENABLED
 #define HAL_RCC_MODULE_ENABLED
 #define HAL_XSPI_MODULE_ENABLED
@@ -70,8 +72,14 @@ extern "C" {
 #ifdef HAL_CORTEX_MODULE_ENABLED
 #include "stm32u5xx_hal_cortex.h"
 #endif
+#ifdef HAL_DCACHE_MODULE_ENABLED
+#include "stm32u5xx_hal_dcache.h"
+#endif
 #ifdef HAL_FLASH_MODULE_ENABLED
 #include "stm32u5xx_hal_flash.h"
+#endif
+#ifdef HAL_ICACHE_MODULE_ENABLED
+#include "stm32u5xx_hal_icache.h"
 #endif
 #ifdef HAL_PWR_MODULE_ENABLED
 #include "stm32u5xx_hal_pwr.h"

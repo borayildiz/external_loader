@@ -22,6 +22,8 @@ add_executable(loader
   "${CMSIS_D}/Source/Templates/system_stm32u5xx.c"
   "${HAL}/Src/stm32u5xx_hal.c"
   "${HAL}/Src/stm32u5xx_hal_cortex.c"
+  "${HAL}/Src/stm32u5xx_hal_dcache.c"
+  "${HAL}/Src/stm32u5xx_hal_icache.c"
   "${HAL}/Src/stm32u5xx_hal_rcc.c"
   "${HAL}/Src/stm32u5xx_hal_rcc_ex.c"
   "${HAL}/Src/stm32u5xx_hal_gpio.c"
